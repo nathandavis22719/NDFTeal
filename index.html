@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nate Davis Fitness, LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d1414;
+    --charcoal: #131f1f;
+    --graphite: #1e2e2e;
+    --steel: #2e4444;
+    --mid: #5a8080;
+    --light: #c4d8d8;
+    --white: #eef5f5;
+    --accent: #2dd4bf;
+    --accent2: #0f9b8e;
+    --accent-dim: rgba(45,212,191,0.12);
+    --red: #e05c5c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── PAGES ─────────────────────────────────────────── */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ─── NAV ────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 70px;
+    background: rgba(13,20,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,160,32,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.25s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    padding: 0.5rem 1.2rem !important;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: #4eeedd !important; color: var(--black) !important; }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none; border: none; padding: 6px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--white); transition: 0.3s;
+  }
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 70px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, rgba(13,20,20,0.97) 40%, rgba(15,155,142,0.2) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.015) 60px,
+        rgba(255,255,255,0.015) 61px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.015) 60px,
+        rgba(255,255,255,0.015) 61px
+      );
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 6% 10%;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 40px; height: 2px; background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 11vw, 9rem);
+    line-height: 0.93;
+    letter-spacing: 2px;
+    color: var(--white);
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-title .highlight { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.15rem; font-weight: 300;
+    line-height: 1.7;
+    color: var(--light);
+    max-width: 520px;
+    margin: 1.8rem 0 2.5rem;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    border: none; cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #4eeedd; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 0.9rem;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    border: 1px solid rgba(245,243,239,0.35); cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover {
+    border-color: var(--accent); color: var(--accent); transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    position: absolute; right: 8%; bottom: 12%; z-index: 2;
+    display: flex; gap: 3rem;
+    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--mid);
+    margin-top: 4px;
+  }
+
+  /* ─── SECTIONS ───────────────────────────────────────── */
+  section { padding: 7rem 8%; }
+
+  .section-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .section-tag::before {
+    content: ''; display: block; width: 30px; height: 2px; background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    letter-spacing: 2px;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+  }
+  .section-title span { color: var(--accent); }
+
+  .section-body {
+    font-size: 1rem; font-weight: 300; line-height: 1.75;
+    color: var(--light); max-width: 640px;
+  }
+
+  /* ─── SERVICES PAGE ──────────────────────────────────── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .service-card {
+    background: var(--charcoal);
+    border: 1px solid var(--graphite);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.25s;
+    cursor: default;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 0;
+    background: var(--accent);
+    transition: height 0.4s;
+  }
+  .service-card:hover { border-color: rgba(232,160,32,0.4); transform: translateY(-4px); }
+  .service-card:hover::before { height: 100%; }
+
+  .service-icon {
+    font-size: 2.2rem; margin-bottom: 1.2rem;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 1px;
+    color: var(--white); margin-bottom: 0.75rem;
+  }
+  .service-desc {
+    font-size: 0.92rem; font-weight: 300;
+    line-height: 1.7; color: var(--light);
+    margin-bottom: 1.5rem;
+  }
+  .service-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--accent); letter-spacing: 1px;
+  }
+  .service-price sub {
+    font-size: 0.75rem; font-weight: 400;
+    color: var(--mid); margin-left: 4px;
+  }
+  .service-features {
+    list-style: none; margin-top: 1rem;
+  }
+  .service-features li {
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--light);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-features li::before { content: '→'; color: var(--accent); font-size: 0.8rem; }
+
+  .packages-banner {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: var(--black);
+    padding: 3rem 3.5rem;
+    margin-top: 3.5rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+  .packages-banner h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 2px; color: var(--black);
+  }
+  .packages-banner p { font-size: 0.95rem; font-weight: 400; max-width: 400px; }
+
+  /* ─── ABOUT TRAINERS ─────────────────────────────────── */
+  .trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .trainer-card {
+    background: var(--charcoal);
+    border: 1px solid var(--graphite);
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .trainer-card:hover { transform: translateY(-5px); border-color: rgba(232,160,32,0.4); }
+
+  .trainer-photo {
+    width: 100%; height: 300px;
+    background: var(--graphite);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .trainer-photo-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .trainer-avatar {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--steel);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    border: 3px solid rgba(232,160,32,0.4);
+  }
+  .photo-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--mid); text-align: center;
+  }
+  .upload-hint {
+    font-size: 0.7rem; color: var(--steel); margin-top: 4px;
+  }
+
+  .trainer-info { padding: 1.8rem; }
+  .trainer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 1px; color: var(--white);
+  }
+  .trainer-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .trainer-bio {
+    font-size: 0.9rem; font-weight: 300;
+    line-height: 1.7; color: var(--light);
+  }
+  .trainer-certs {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.2rem;
+  }
+  .cert-badge {
+    background: var(--graphite);
+    border: 1px solid var(--steel);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--mid);
+    padding: 4px 10px; border-radius: 2px;
+  }
+
+  /* ─── PHOTOS / GALLERY ───────────────────────────────── */
+  .gallery-tabs {
+    display: flex; gap: 0; margin: 2.5rem 0;
+    border-bottom: 1px solid var(--graphite);
+  }
+  .gallery-tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--mid);
+    padding: 0.75rem 1.8rem;
+    cursor: pointer; border: none; background: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .gallery-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .gallery-tab:hover { color: var(--white); }
+
+  .gallery-panel { display: none; }
+  .gallery-panel.active { display: block; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .photo-slot {
+    aspect-ratio: 1;
+    background: var(--charcoal);
+    border: 2px dashed var(--graphite);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .photo-slot:hover { border-color: var(--accent); background: var(--graphite); }
+  .photo-slot img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .photo-slot-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .photo-slot:hover .photo-slot-overlay { opacity: 1; }
+  .photo-slot-icon { font-size: 1.8rem; color: var(--mid); }
+  .photo-slot-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--mid); text-align: center; padding: 0 1rem;
+  }
+
+  .progress-pair {
+    background: var(--charcoal);
+    border: 1px solid var(--graphite);
+    overflow: hidden;
+  }
+  .progress-images {
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .progress-side { position: relative; }
+  .progress-label {
+    position: absolute; top: 8px; left: 8px;
+    background: rgba(0,0,0,0.7);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent);
+    padding: 4px 8px;
+  }
+  .progress-after .progress-label { background: rgba(232,160,32,0.85); color: var(--black); }
+  .progress-info {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid var(--graphite);
+  }
+  .progress-client {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    letter-spacing: 1px; color: var(--white);
+  }
+  .progress-result {
+    font-size: 0.82rem; font-weight: 300; color: var(--accent); margin-top: 2px;
+  }
+
+  /* ─── TESTIMONIALS ───────────────────────────────────── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--charcoal);
+    border: 1px solid var(--graphite);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.25s;
+  }
+  .testimonial-card:hover { border-color: rgba(232,160,32,0.3); }
+
+  .quote-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem; line-height: 1;
+    color: var(--accent);
+    opacity: 0.25;
+    position: absolute; top: 1rem; right: 1.5rem;
+  }
+
+  .testimonial-text {
+    font-size: 0.95rem; font-weight: 300;
+    line-height: 1.75; font-style: italic;
+    color: var(--light);
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .testimonial-author {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--graphite);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    border: 2px solid rgba(232,160,32,0.4);
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    letter-spacing: 1px; color: var(--white);
+  }
+  .author-detail {
+    font-size: 0.78rem; font-weight: 300;
+    color: var(--mid); margin-top: 2px;
+  }
+  .stars {
+    color: var(--accent); font-size: 0.85rem;
+    margin-bottom: 1rem; letter-spacing: 2px;
+  }
+
+  /* ─── QUESTIONNAIRE ──────────────────────────────────── */
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  input, select, textarea {
+    background: var(--charcoal);
+    border: 1px solid var(--graphite);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem; font-weight: 300;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  input::placeholder, textarea::placeholder { color: var(--steel); }
+  select option { background: var(--charcoal); }
+  textarea { resize: vertical; min-height: 120px; }
+
+  .radio-group {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-top: 4px;
+  }
+  .radio-option {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+  .radio-option input[type="radio"] {
+    width: auto; accent-color: var(--accent);
+  }
+  .radio-option span {
+    font-size: 0.9rem; font-weight: 300; color: var(--light);
+  }
+
+  .checkbox-group {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-top: 4px;
+  }
+  .checkbox-option {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+  .checkbox-option input[type="checkbox"] {
+    width: auto; accent-color: var(--accent);
+  }
+  .checkbox-option span {
+    font-size: 0.9rem; font-weight: 300; color: var(--light);
+  }
+
+  .form-note {
+    font-size: 0.82rem; font-weight: 300;
+    color: var(--mid); line-height: 1.6;
+    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(232,160,32,0.05);
+  }
+
+  .submit-row {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-top: 2.5rem; flex-wrap: wrap;
+  }
+
+  .success-msg {
+    display: none;
+    background: rgba(232,160,32,0.1);
+    border: 1px solid rgba(232,160,32,0.4);
+    padding: 1rem 1.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.92rem; color: var(--accent);
+  }
+
+  /* ─── DIVIDER ────────────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--graphite), transparent);
+    margin: 0 8%;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid var(--graphite);
+    padding: 4rem 8% 2.5rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 3px;
+    color: var(--white); margin-bottom: 1rem;
+  }
+  .footer-brand span { color: var(--accent); }
+  .footer-tagline {
+    font-size: 0.88rem; font-weight: 300;
+    line-height: 1.7; color: var(--mid);
+  }
+  .footer-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li {
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--light); margin-bottom: 0.6rem;
+    cursor: pointer; transition: color 0.2s;
+  }
+  .footer-col ul li:hover { color: var(--accent); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--graphite);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    font-size: 0.8rem; color: var(--steel);
+  }
+
+  /* ─── ANIMATIONS ─────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; gap: 0; }
+    .nav-links.open {
+      display: flex;
+      position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--charcoal);
+      border-bottom: 1px solid var(--graphite);
+      padding: 1rem 0;
+    }
+    .nav-links a {
+      padding: 0.85rem 5%;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: block;
+    }
+    .nav-links a::after { display: none; }
+    .hamburger { display: flex; }
+
+    .hero-stats { display: none; }
+    .hero-content { padding: 5% 6%; }
+    .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+
+    .form-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+
+    section { padding: 4rem 6%; }
+  }
+
+  /* ─── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--charcoal); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="showPage('home')">NATE <span>DAVIS</span> FITNESS</div>
+  <ul class="nav-links" id="navLinks">
+    <a onclick="showPage('home'); closeMenu()">Home</a>
+    <a onclick="showPage('services'); closeMenu()">Services</a>
+    <a onclick="showPage('trainers'); closeMenu()">Our Trainers</a>
+    <a onclick="showPage('gallery'); closeMenu()">Gallery</a>
+    <a onclick="showPage('testimonials'); closeMenu()">Testimonials</a>
+    <a onclick="showPage('questionnaire'); closeMenu()" class="nav-cta">Get Started</a>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Nate Davis Fitness, LLC</div>
+      <h1 class="hero-title">
+        BUILD YOUR<br><span class="highlight">STRONGEST</span><br>SELF
+      </h1>
+      <p class="hero-sub">
+        Online & in-person personal training, strength & conditioning, and nutritional coaching — designed around you, driven by results.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('questionnaire')">Start Your Journey</button>
+        <button class="btn-outline" onclick="showPage('services')">View Services</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years Team Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Services Offered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Personalized Plans</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO STRIP -->
+  <section style="background: var(--charcoal); padding: 4rem 8%;">
+    <div class="section-tag fade-in">What We Offer</div>
+    <h2 class="section-title fade-in">THREE PILLARS OF <span>TRANSFORMATION</span></h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:1.5rem; margin-top:2.5rem;">
+      <div class="service-card fade-in">
+        <div class="service-icon">🏋️</div>
+        <div class="service-name">Personal Training</div>
+        <div class="service-desc">One-on-one sessions tailored to your goals — available in-person or fully online with live video coaching.</div>
+      </div>
+      <div class="service-card fade-in" style="transition-delay:0.1s">
+        <div class="service-icon">⚡</div>
+        <div class="service-name">Strength & Conditioning</div>
+        <div class="service-desc">Science-backed programming to build power, endurance, and athletic performance at every level.</div>
+      </div>
+      <div class="service-card fade-in" style="transition-delay:0.2s">
+        <div class="service-icon">🥗</div>
+        <div class="service-name">Nutritional Coaching</div>
+        <div class="service-desc">Sustainable eating strategies — no fad diets. Real food, real accountability, real results.</div>
+      </div>
+    </div>
+    <div style="margin-top: 2.5rem; text-align: center;">
+      <button class="btn-primary" onclick="showPage('services')">See All Packages & Pricing</button>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TESTIMONIAL PREVIEW -->
+  <section>
+    <div class="section-tag fade-in">Client Stories</div>
+    <h2 class="section-title fade-in">REAL PEOPLE, <span>REAL RESULTS</span></h2>
+    <div style="margin-top:2.5rem; background:var(--charcoal); border:1px solid var(--graphite); padding:3rem; text-align:center;" class="fade-in">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">⭐</div>
+      <p style="font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;">Client Testimonials</p>
+      <p style="font-size:0.95rem;font-weight:300;color:var(--mid);max-width:480px;margin:0 auto 1.5rem;">Testimonials from our clients will appear here. Be the first to share your experience!</p>
+      <button class="btn-outline" onclick="showPage('testimonials')">Leave a Review</button>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section style="padding: 0 8% 7rem;">
+    <div class="packages-banner fade-in">
+      <div>
+        <h3>READY TO START?</h3>
+        <p>Fill out our quick questionnaire so we can build the perfect program for you. Zero commitment, 100% personalized.</p>
+      </div>
+      <button class="btn-primary" style="background:var(--black); color:var(--accent); border:2px solid var(--accent);" onclick="showPage('questionnaire')">Take the Questionnaire</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════ SERVICES PAGE ══════════════ -->
+<div class="page" id="page-services">
+  <section style="padding-top: 120px;">
+    <div class="section-tag fade-in">What We Offer</div>
+    <h2 class="section-title fade-in">SERVICES & <span>PACKAGES</span></h2>
+    <p class="section-body fade-in">Every program is fully customized to your goals, schedule, and lifestyle. Whether you're just starting out or a seasoned athlete — we have a plan for you.</p>
+
+    <div class="services-grid">
+
+      <!-- Personal Training -->
+      <div class="service-card fade-in">
+        <div class="service-icon">🏋️</div>
+        <div class="service-name">In-Person Training</div>
+        <div class="service-desc">Face-to-face sessions with hands-on coaching, real-time form corrections, and full accountability.</div>
+        <div class="service-price">$60<sub>/ session</sub></div>
+        <ul class="service-features">
+          <li>1-on-1 personalized sessions</li>
+          <li>Customized workout programming</li>
+          <li>Form & technique coaching</li>
+          <li>Progress tracking & check-ins</li>
+          <li>Session recap notes</li>
+        </ul>
+      </div>
+
+      <!-- Online Coaching -->
+      <div class="service-card fade-in" style="transition-delay:0.05s">
+        <div class="service-icon">💻</div>
+        <div class="service-name">Online Coaching</div>
+        <div class="service-desc">Full coaching experience delivered remotely. Perfect for busy schedules or clients outside the local area.</div>
+        <div class="service-price">$250<sub>/ month</sub></div>
+        <ul class="service-features">
+          <li>Customized training plan</li>
+          <li>Weekly video check-ins</li>
+          <li>Form review via video upload</li>
+          <li>24/7 messaging support</li>
+          <li>Monthly program adjustments</li>
+        </ul>
+      </div>
+
+      <!-- Strength & Conditioning -->
+      <div class="service-card fade-in" style="transition-delay:0.1s">
+        <div class="service-icon">⚡</div>
+        <div class="service-name">Strength & Conditioning</div>
+        <div class="service-desc">Athletic performance programming for strength, speed, power, and endurance — built on proven methodology.</div>
+        <div class="service-price">$250<sub>/ month</sub></div>
+        <ul class="service-features">
+          <li>Periodized programming</li>
+          <li>Sport-specific training</li>
+          <li>Mobility & injury prevention</li>
+          <li>Performance testing & benchmarks</li>
+          <li>Recovery protocol guidance</li>
+        </ul>
+      </div>
+
+      <!-- Nutrition -->
+      <div class="service-card fade-in" style="transition-delay:0.15s">
+        <div class="service-icon">🥗</div>
+        <div class="service-name">Nutritional Coaching</div>
+        <div class="service-desc">Individualized nutrition strategy with ongoing accountability. No cookie-cutter meal plans.</div>
+        <div class="service-price">$150<sub>/ month</sub></div>
+        <ul class="service-features">
+          <li>Macro & calorie targets</li>
+          <li>Grocery & meal prep guidance</li>
+          <li>Weekly check-in & logging review</li>
+          <li>Supplement recommendations</li>
+          <li>Long-term habit building</li>
+        </ul>
+      </div>
+
+      <!-- Elite Bundle -->
+      <div class="service-card fade-in" style="transition-delay:0.2s; border-color: rgba(232,160,32,0.4); grid-column: span 1;">
+        <div style="position:absolute;top:1rem;right:1rem;background:var(--accent);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px;padding:3px 10px;">MOST POPULAR</div>
+        <div class="service-icon">🔥</div>
+        <div class="service-name">Elite Bundle</div>
+        <div class="service-desc">Our most comprehensive package — combines online coaching and nutrition for total body transformation.</div>
+        <div class="service-price">$350<sub>/ month</sub> <span style="color:var(--mid);font-size:0.8rem;text-decoration:line-through;font-family:'Barlow',sans-serif;">$400</span></div>
+        <ul class="service-features">
+          <li>Full online training program</li>
+          <li>Complete nutrition coaching</li>
+          <li>Twice-weekly video check-ins</li>
+          <li>Priority messaging access</li>
+          <li>Monthly body composition review</li>
+          <li>Custom meal & training calendar</li>
+        </ul>
+      </div>
+
+
+    </div>
+
+    <div class="packages-banner fade-in" style="margin-top:4rem;">
+      <div>
+        <h3>NOT SURE WHICH PACKAGE IS RIGHT?</h3>
+        <p>Fill out our quick intake questionnaire and we'll recommend the best fit for your goals and budget — no pressure, no commitment.</p>
+      </div>
+      <button class="btn-primary" onclick="showPage('questionnaire')">Get a Recommendation</button>
+    </div>
+
+  </section>
+</div>
+
+<!-- ══════════════ TRAINERS PAGE ══════════════ -->
+<div class="page" id="page-trainers">
+  <section style="padding-top: 120px;">
+    <div class="section-tag fade-in">Meet the Team</div>
+    <h2 class="section-title fade-in">ABOUT OUR <span>TRAINERS</span></h2>
+    <p class="section-body fade-in">Our coaches bring expertise, passion, and relentless dedication to helping every client reach their potential.</p>
+
+    <div class="trainers-grid">
+
+      <!-- Nate Davis -->
+      <div class="trainer-card fade-in">
+        <div class="trainer-photo" style="background: linear-gradient(135deg, var(--graphite), var(--steel));">
+          <div class="trainer-photo-placeholder">
+            <div class="trainer-avatar">💪</div>
+            <div class="photo-label">Head Trainer</div>
+            <div class="upload-hint">[ Replace with your photo ]</div>
+          </div>
+        </div>
+        <div class="trainer-info">
+          <div class="trainer-name">Nate Davis</div>
+          <div class="trainer-title">Founder & Head Trainer</div>
+          <p class="trainer-bio">Nate founded NDF with one mission: make elite-level coaching accessible to everyone. Backed by nearly half a decade of dedicated training experience and one year of professional commercial coaching, he combines real-world gym knowledge with certified expertise to deliver programming that's intense, intentional, and built around you. Together, our team brings over 5 years of combined fitness experience to every client relationship.</p>
+          <div class="trainer-certs">
+            <span class="cert-badge">NASM-CPT</span>
+            <span class="cert-badge">Precision Nutrition</span>
+            <span class="cert-badge">Strength & Conditioning</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Angela S. -->
+      <div class="trainer-card fade-in" style="transition-delay:0.1s">
+        <div class="trainer-photo" style="background: linear-gradient(135deg, var(--graphite), #2d2318);">
+          <div class="trainer-photo-placeholder">
+            <div class="trainer-avatar">🏃</div>
+            <div class="photo-label">Trainer / Coach</div>
+            <div class="upload-hint">[ Replace with trainer photo ]</div>
+          </div>
+        </div>
+        <div class="trainer-info">
+          <div class="trainer-name">Angela S.</div>
+          <div class="trainer-title">Strength Coach & Nutritionist</div>
+          <p class="trainer-bio">Add Angela's bio here — her background, specialty, and what drives her as a coach. Highlight key achievements, client results, and her coaching philosophy.</p>
+          <div class="trainer-certs">
+            <span class="cert-badge">ACE-CPT</span>
+            <span class="cert-badge">Nutrition Coach</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 4rem; background: var(--charcoal); border: 1px solid var(--graphite); padding: 2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;" class="fade-in">
+      <div>
+        <div class="section-tag" style="margin-bottom:0.5rem;">Join Our Team</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:var(--white);">PASSIONATE ABOUT FITNESS COACHING?</h3>
+        <p style="font-size:0.9rem;font-weight:300;color:var(--mid);margin-top:0.5rem;">We're always looking for dedicated, certified trainers to grow with us.</p>
+      </div>
+      <button class="btn-outline" onclick="showPage('questionnaire')">Get in Touch</button>
+    </div>
+
+  </section>
+</div>
+
+<!-- ══════════════ GALLERY PAGE ══════════════ -->
+<div class="page" id="page-gallery">
+  <section style="padding-top: 120px;">
+    <div class="section-tag fade-in">Visual Portfolio</div>
+    <h2 class="section-title fade-in">PHOTOS & <span>PROGRESS</span></h2>
+    <p class="section-body fade-in">A look at our trainers in action and the incredible transformations our clients have achieved.</p>
+
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="switchTab('trainer-photos', this)">Trainer Photos</button>
+      <button class="gallery-tab" onclick="switchTab('gym-shots', this)">Gym & Action Shots</button>
+      <button class="gallery-tab" onclick="switchTab('client-progress', this)">Client Progress</button>
+    </div>
+
+    <!-- TRAINER PHOTOS -->
+    <div class="gallery-panel active" id="panel-trainer-photos">
+      <div class="photo-grid">
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Nate Davis<br>Head Trainer</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Trainer Photo<br>Add Here</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Trainer Photo<br>Add Here</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Trainer Photo<br>Add Here</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Team Photo<br>Add Here</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">📷</div>
+          <div class="photo-slot-text">Trainer Photo<br>Add Here</div>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--steel);font-style:italic;">📌 To add photos, replace these placeholder slots with your actual images using &lt;img&gt; tags or your website platform's media uploader.</p>
+    </div>
+
+    <!-- GYM SHOTS -->
+    <div class="gallery-panel" id="panel-gym-shots">
+      <div class="photo-grid">
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Training Session</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Gym Photo</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Action Shot</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Gym Photo</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Action Shot</div>
+        </div>
+        <div class="photo-slot">
+          <div class="photo-slot-icon">🏋️</div>
+          <div class="photo-slot-text">Gym Photo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENT PROGRESS -->
+    <div class="gallery-panel" id="panel-client-progress">
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1.5rem;">
+
+        <div class="progress-pair fade-in">
+          <div class="progress-images">
+            <div class="progress-side">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none; border-right: 1px solid var(--graphite);">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">Before</div>
+              </div>
+              <div class="progress-label">BEFORE</div>
+            </div>
+            <div class="progress-side progress-after">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none;">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">After</div>
+              </div>
+              <div class="progress-label">AFTER</div>
+            </div>
+          </div>
+          <div class="progress-info">
+            <div class="progress-client">Client Name</div>
+            <div class="progress-result">Result achieved — e.g. Lost 35 lbs in 16 weeks</div>
+          </div>
+        </div>
+
+        <div class="progress-pair fade-in" style="transition-delay:0.1s">
+          <div class="progress-images">
+            <div class="progress-side">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none; border-right: 1px solid var(--graphite);">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">Before</div>
+              </div>
+              <div class="progress-label">BEFORE</div>
+            </div>
+            <div class="progress-side progress-after">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none;">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">After</div>
+              </div>
+              <div class="progress-label">AFTER</div>
+            </div>
+          </div>
+          <div class="progress-info">
+            <div class="progress-client">Client Name</div>
+            <div class="progress-result">Result achieved — e.g. Gained 12 lbs of muscle</div>
+          </div>
+        </div>
+
+        <div class="progress-pair fade-in" style="transition-delay:0.2s">
+          <div class="progress-images">
+            <div class="progress-side">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none; border-right: 1px solid var(--graphite);">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">Before</div>
+              </div>
+              <div class="progress-label">BEFORE</div>
+            </div>
+            <div class="progress-side progress-after">
+              <div class="photo-slot" style="aspect-ratio: unset; height: 200px; border: none;">
+                <div class="photo-slot-icon">📷</div>
+                <div class="photo-slot-text">After</div>
+              </div>
+              <div class="progress-label">AFTER</div>
+            </div>
+          </div>
+          <div class="progress-info">
+            <div class="progress-client">Client Name</div>
+            <div class="progress-result">Result achieved — add your client's win here</div>
+          </div>
+        </div>
+
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--steel);font-style:italic;">📌 Add client before & after photos by inserting &lt;img&gt; tags into the photo slot divs. Always obtain written consent before posting client photos.</p>
+    </div>
+
+  </section>
+</div>
+
+<!-- ══════════════ TESTIMONIALS PAGE ══════════════ -->
+<div class="page" id="page-testimonials">
+  <section style="padding-top: 120px;">
+    <div class="section-tag fade-in">Client Stories</div>
+    <h2 class="section-title fade-in">WHAT OUR <span>CLIENTS SAY</span></h2>
+    <p class="section-body fade-in">Real experiences from real clients. Have you trained with us? Share your story below.</p>
+
+    <!-- Approved testimonials will appear here -->
+    <div class="testimonials-grid" id="approvedTestimonials" style="margin-top:3rem;">
+      <!-- Empty state shown when no approved testimonials exist -->
+      <div id="noTestimonialsMsg" style="grid-column:1/-1; background:var(--charcoal); border:1px solid var(--graphite); padding:3rem; text-align:center;">
+        <div style="font-size:2.5rem; margin-bottom:1rem;">💬</div>
+        <p style="font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;">No Reviews Yet</p>
+        <p style="font-size:0.95rem;font-weight:300;color:var(--mid);">Be the first to leave a review! Use the form below to share your experience.</p>
+      </div>
+    </div>
+
+    <!-- Submit a Testimonial -->
+    <div style="margin-top:4rem; background:var(--charcoal); border:1px solid var(--graphite); padding:2.5rem;" class="fade-in">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--white);margin-bottom:0.5rem;">LEAVE A <span style="color:var(--accent);">REVIEW</span></div>
+      <p style="font-size:0.88rem;font-weight:300;color:var(--mid);margin-bottom:2rem;">Trained with us? We'd love to hear about your experience. All reviews are reviewed before being published.</p>
+
+      <form id="testimonialForm" onsubmit="submitTestimonial(event)">
+        <div class="form-grid" style="max-width:700px;">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="tName" placeholder="First name & last initial (e.g. Jessica M.)" required>
+          </div>
+          <div class="form-group">
+            <label>Service Used</label>
+            <select id="tService">
+              <option value="">Select...</option>
+              <option>In-Person Training</option>
+              <option>Online Coaching</option>
+              <option>Strength & Conditioning</option>
+              <option>Nutritional Coaching</option>
+              <option>Elite Bundle</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Your Rating *</label>
+            <div id="starRating" style="display:flex;gap:8px;margin-top:4px;">
+              <span class="star-btn" data-val="1" onclick="setRating(1)" style="font-size:1.8rem;cursor:pointer;color:var(--graphite);transition:color 0.15s;">★</span>
+              <span class="star-btn" data-val="2" onclick="setRating(2)" style="font-size:1.8rem;cursor:pointer;color:var(--graphite);transition:color 0.15s;">★</span>
+              <span class="star-btn" data-val="3" onclick="setRating(3)" style="font-size:1.8rem;cursor:pointer;color:var(--graphite);transition:color 0.15s;">★</span>
+              <span class="star-btn" data-val="4" onclick="setRating(4)" style="font-size:1.8rem;cursor:pointer;color:var(--graphite);transition:color 0.15s;">★</span>
+              <span class="star-btn" data-val="5" onclick="setRating(5)" style="font-size:1.8rem;cursor:pointer;color:var(--graphite);transition:color 0.15s;">★</span>
+            </div>
+            <input type="hidden" id="tRating" value="0">
+          </div>
+          <div class="form-group full">
+            <label>Your Review *</label>
+            <textarea id="tReview" placeholder="Tell us about your experience — your goals, what changed, and what you'd tell someone considering working with us..." required style="min-height:140px;"></textarea>
+          </div>
+          <div class="form-group full" style="display:flex;align-items:flex-start;gap:10px;">
+            <input type="checkbox" id="tConsent" style="width:auto;margin-top:3px;" required>
+            <label for="tConsent" style="font-size:0.82rem;font-weight:300;color:var(--mid);text-transform:none;letter-spacing:0;line-height:1.6;cursor:pointer;">I consent to Nate Davis Fitness, LLC publishing my review on their website. I confirm this review reflects my genuine experience.</label>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <button type="submit" class="btn-primary">Submit Review</button>
+        </div>
+      </form>
+
+      <div id="testimonialPending" style="display:none; margin-top:1.5rem; background:rgba(232,160,32,0.08); border:1px solid rgba(232,160,32,0.35); padding:1.2rem 1.5rem;">
+        <p style="font-size:0.92rem;color:var(--accent);">✅ <strong>Thank you for your review!</strong> It has been submitted and is pending approval. Once reviewed, it will appear on this page.</p>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL (password protected, hidden by default) -->
+    <div style="margin-top:3rem;" class="fade-in">
+      <button onclick="toggleAdmin()" style="background:none;border:1px solid var(--graphite);color:var(--steel);font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;padding:0.5rem 1rem;cursor:pointer;">Admin Access</button>
+      <div id="adminPanel" style="display:none; margin-top:1rem; background:var(--charcoal); border:1px solid var(--graphite); padding:2rem;">
+        <div id="adminLogin">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;">Admin Login</div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label>Password</label>
+              <input type="password" id="adminPassword" placeholder="Enter admin password" style="width:220px;">
+            </div>
+            <button onclick="adminLogin()" class="btn-primary" style="padding:0.85rem 1.5rem;">Login</button>
+          </div>
+          <div id="adminLoginError" style="display:none;color:#d63b2f;font-size:0.82rem;margin-top:0.5rem;">Incorrect password.</div>
+        </div>
+        <div id="adminContent" style="display:none;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white);">PENDING REVIEWS <span style="color:var(--accent);" id="pendingCount">(0)</span></div>
+            <button onclick="adminLogout()" style="background:none;border:1px solid var(--steel);color:var(--mid);font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;padding:0.4rem 1rem;cursor:pointer;">Logout</button>
+          </div>
+          <div id="pendingList">
+            <p style="color:var(--mid);font-size:0.9rem;font-weight:300;">No pending reviews.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- ══════════════ QUESTIONNAIRE PAGE ══════════════ -->
+<div class="page" id="page-questionnaire">
+  <section style="padding-top: 120px; max-width: 900px; margin: 0 auto;">
+    <div class="section-tag fade-in">Get Started</div>
+    <h2 class="section-title fade-in">PERSONAL TRAINING <span>QUESTIONNAIRE</span></h2>
+    <p class="section-body fade-in">Tell us about yourself so we can build the perfect program for your goals. This takes about 3–5 minutes and helps us make your first consultation as productive as possible.</p>
+
+    <div class="form-note fade-in">
+      🔒 Your information is completely confidential and will only be used to personalize your training experience. We'll follow up within 24 hours.
+    </div>
+
+    <form id="intakeForm" onsubmit="submitForm(event)">
+
+      <!-- SECTION 1: Basic Info -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">01 — BASIC INFORMATION</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" placeholder="Smith" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" placeholder="john@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(555) 000-0000">
+          </div>
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" placeholder="e.g. 28" min="13" max="99">
+          </div>
+          <div class="form-group">
+            <label>Biological Sex</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Height</label>
+            <input type="text" placeholder="e.g. 5'10&quot;">
+          </div>
+          <div class="form-group">
+            <label>Current Weight (lbs)</label>
+            <input type="number" placeholder="e.g. 185">
+          </div>
+          <div class="form-group">
+            <label>City / State</label>
+            <input type="text" placeholder="Detroit, MI">
+          </div>
+          <div class="form-group">
+            <label>How did you hear about us?</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>TikTok</option>
+              <option>Google Search</option>
+              <option>Friend / Family Referral</option>
+              <option>Current or Past Client</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Goals -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">02 — YOUR GOALS</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Primary Goal *</label>
+            <select required>
+              <option value="">Select your main goal...</option>
+              <option>Lose Body Fat / Weight Loss</option>
+              <option>Build Muscle / Body Recomposition</option>
+              <option>Improve Strength / Powerlifting</option>
+              <option>Athletic Performance / Sport</option>
+              <option>General Health & Fitness</option>
+              <option>Contest Prep / Physique Competition</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Goal Weight or Target (if applicable)</label>
+            <input type="text" placeholder="e.g. 165 lbs, or squat 315 lbs, or run a 5K">
+          </div>
+          <div class="form-group full">
+            <label>What does your ideal outcome look like in 6 months? *</label>
+            <textarea placeholder="Describe your goal in detail — the more specific, the better..." required></textarea>
+          </div>
+          <div class="form-group full">
+            <label>What has stopped you from reaching your goals in the past?</label>
+            <textarea placeholder="Lack of accountability? Time? Consistency? Nutrition? Injury?"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Training Background -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">03 — TRAINING BACKGROUND</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Training Experience Level *</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="experience" value="beginner"><span>Beginner (0–1 year)</span></label>
+              <label class="radio-option"><input type="radio" name="experience" value="intermediate"><span>Intermediate (1–3 years)</span></label>
+              <label class="radio-option"><input type="radio" name="experience" value="advanced"><span>Advanced (3+ years)</span></label>
+              <label class="radio-option"><input type="radio" name="experience" value="athlete"><span>Competitive Athlete</span></label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Preferred Training Style (select all that apply)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox"><span>Weight Training / Barbell Work</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Bodybuilding / Hypertrophy</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Cardio / Endurance</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Functional / Athletic Training</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Calisthenics / Bodyweight</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>HIIT / Circuit Training</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Not sure — advise me!</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Days available to train per week</label>
+            <select>
+              <option value="">Select...</option>
+              <option>1–2 days</option>
+              <option>3 days</option>
+              <option>4 days</option>
+              <option>5 days</option>
+              <option>6+ days</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Average session length</label>
+            <select>
+              <option value="">Select...</option>
+              <option>30 minutes</option>
+              <option>45 minutes</option>
+              <option>60 minutes</option>
+              <option>75–90 minutes</option>
+              <option>No preference</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Equipment / Gym Access</label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox"><span>Full Commercial Gym</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Home Gym (barbells, racks)</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Dumbbells & Minimal Equipment</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>No Equipment (bodyweight only)</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Health -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">04 — HEALTH & MEDICAL</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Do you have any injuries, pain, or medical conditions we should be aware of?</label>
+            <textarea placeholder="e.g. Lower back pain, ACL surgery history, high blood pressure, diabetes... anything relevant"></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Are you currently taking any medications that may affect your training or nutrition?</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="medications" value="no"><span>No</span></label>
+              <label class="radio-option"><input type="radio" name="medications" value="yes"><span>Yes (please describe in comments)</span></label>
+              <label class="radio-option"><input type="radio" name="medications" value="prefer"><span>Prefer not to say</span></label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Current Activity Level</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Sedentary (desk job, minimal movement)</option>
+              <option>Lightly active (light exercise 1–2x/week)</option>
+              <option>Moderately active (exercise 3–4x/week)</option>
+              <option>Very active (exercise daily, physical job)</option>
+              <option>Extremely active (athlete-level training)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Nutrition -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">05 — NUTRITION</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Are you interested in nutrition coaching?</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="nutrition" value="yes"><span>Yes, definitely</span></label>
+              <label class="radio-option"><input type="radio" name="nutrition" value="maybe"><span>Maybe / Would like to know more</span></label>
+              <label class="radio-option"><input type="radio" name="nutrition" value="no"><span>No, just training for now</span></label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Dietary restrictions or preferences</label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox"><span>None</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Vegetarian</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Vegan</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Gluten-Free</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Dairy-Free</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Halal</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Kosher</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Other</span></label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Describe your current eating habits</label>
+            <textarea placeholder="How many meals do you eat per day? Do you track calories? Any supplements? Do you drink alcohol regularly?"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 6: Coaching Preference -->
+      <div style="margin-top:3rem;" class="fade-in">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--accent);border-bottom:1px solid var(--graphite);padding-bottom:0.75rem;margin-bottom:1.5rem;">06 — COACHING PREFERENCES</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Preferred Coaching Format *</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="format" value="in-person"><span>In-Person Training</span></label>
+              <label class="radio-option"><input type="radio" name="format" value="online"><span>Online Coaching</span></label>
+              <label class="radio-option"><input type="radio" name="format" value="either"><span>Either Works</span></label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Services you're interested in (select all that apply)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox"><span>Personal Training</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Strength & Conditioning</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Nutritional Coaching</span></label>
+              <label class="checkbox-option"><input type="checkbox"><span>Elite Bundle (Training + Nutrition)</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Monthly Budget Range</label>
+            <select>
+              <option value="">Select...</option>
+              <option>$200 – $300</option>
+              <option>$300 – $400</option>
+              <option>$400+</option>
+              <option>Flexible — I want what works</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Start Date</label>
+            <input type="date">
+          </div>
+          <div class="form-group full">
+            <label>Anything else you'd like us to know?</label>
+            <textarea placeholder="Questions, concerns, special circumstances, or anything you'd like us to know before your consultation..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-row fade-in">
+        <button type="submit" class="btn-primary" style="font-size:1rem; padding:1.1rem 3rem;">Submit Questionnaire</button>
+        <p style="font-size:0.82rem; color:var(--mid); font-weight:300;">We'll reach out within 24 hours to schedule your free consultation.</p>
+      </div>
+
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      ✅ <strong>Thank you!</strong> We've received your questionnaire and will be in touch within 24 hours to schedule your free consultation. Get ready — your transformation starts now.
+    </div>
+
+  </section>
+</div>
+
+<!-- FOOTER (shown on all pages) -->
+<footer id="siteFooter">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">NATE <span>DAVIS</span> FITNESS</div>
+      <p class="footer-tagline">Online & in-person personal training, strength & conditioning, and nutritional coaching — designed around you, driven by results.</p>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;">
+        <div style="width:36px;height:36px;background:var(--graphite);border:1px solid var(--steel);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--steel)'">📸</div>
+        <div style="width:36px;height:36px;background:var(--graphite);border:1px solid var(--steel);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--steel)'">📱</div>
+        <div style="width:36px;height:36px;background:var(--graphite);border:1px solid var(--steel);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--steel)'">💬</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="showPage('services')">Services & Packages</li>
+        <li onclick="showPage('trainers')">Our Trainers</li>
+        <li onclick="showPage('gallery')">Gallery</li>
+        <li onclick="showPage('testimonials')">Testimonials</li>
+        <li onclick="showPage('questionnaire')">Get Started</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li>📧 info@natedavisfitness.com</li>
+        <li>📞 (734) 518-3016</li>
+        <li>📍 Detroit Metro Area, MI</li>
+        <li style="margin-top:0.5rem; color:var(--mid);">Mon–Fri: 6am – 8pm</li>
+        <li style="color:var(--mid);">Sat–Sun: 8am – 4pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Nate Davis Fitness, LLC. All rights reserved.</span>
+    <span>Built with 💪 · Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script>
+  // ─── PAGE ROUTING ───────────────────────────────────────
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    triggerFadeIns();
+    if (name === 'testimonials') renderApprovedTestimonials();
+  }
+
+  // ─── MOBILE NAV ─────────────────────────────────────────
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // ─── GALLERY TABS ────────────────────────────────────────
+  function switchTab(panel, btn) {
+    document.querySelectorAll('.gallery-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + panel).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ─── FADE IN ON SCROLL ───────────────────────────────────
+  function triggerFadeIns() {
+    setTimeout(() => {
+      const els = document.querySelectorAll('.fade-in:not(.visible)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      els.forEach(el => observer.observe(el));
+    }, 50);
+  }
+
+  // ─── FORM SUBMIT ─────────────────────────────────────────
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('intakeForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ─── TESTIMONIALS ─────────────────────────────────────────
+  // In-memory storage (session only — wire to a backend/email service for persistence)
+  let pendingTestimonials = JSON.parse(sessionStorage.getItem('ndf_pending') || '[]');
+  let approvedTestimonials = JSON.parse(sessionStorage.getItem('ndf_approved') || '[]');
+  let currentRating = 0;
+
+  function setRating(val) {
+    currentRating = val;
+    document.getElementById('tRating').value = val;
+    document.querySelectorAll('.star-btn').forEach(s => {
+      s.style.color = parseInt(s.dataset.val) <= val ? 'var(--accent)' : 'var(--graphite)';
+    });
+  }
+
+  function submitTestimonial(e) {
+    e.preventDefault();
+    const name = document.getElementById('tName').value.trim();
+    const service = document.getElementById('tService').value;
+    const rating = parseInt(document.getElementById('tRating').value);
+    const review = document.getElementById('tReview').value.trim();
+    if (!name || !review) return;
+    if (rating < 1) { alert('Please select a star rating.'); return; }
+
+    const entry = { name, service, rating, review, date: new Date().toLocaleDateString('en-US', {month:'long',year:'numeric'}) };
+    pendingTestimonials.push(entry);
+    sessionStorage.setItem('ndf_pending', JSON.stringify(pendingTestimonials));
+
+    document.getElementById('testimonialForm').style.display = 'none';
+    document.getElementById('testimonialPending').style.display = 'block';
+  }
+
+  function renderApprovedTestimonials() {
+    const grid = document.getElementById('approvedTestimonials');
+    const noMsg = document.getElementById('noTestimonialsMsg');
+    // Remove old rendered cards (not the noMsg)
+    grid.querySelectorAll('.testimonial-card').forEach(c => c.remove());
+
+    if (approvedTestimonials.length === 0) {
+      noMsg.style.display = 'block';
+    } else {
+      noMsg.style.display = 'none';
+      approvedTestimonials.forEach(t => {
+        const stars = '★'.repeat(t.rating) + '☆'.repeat(5 - t.rating);
+        const card = document.createElement('div');
+        card.className = 'testimonial-card fade-in';
+        card.innerHTML = `
+          <div class="stars">${stars}</div>
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">${escapeHtml(t.review)}</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">⭐</div>
+            <div>
+              <div class="author-name">${escapeHtml(t.name.toUpperCase())}</div>
+              <div class="author-detail">${t.service ? escapeHtml(t.service) + ' · ' : ''}${t.date}</div>
+            </div>
+          </div>`;
+        grid.insertBefore(card, noMsg);
+      });
+    }
+    triggerFadeIns();
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ─── ADMIN ────────────────────────────────────────────────
+  const ADMIN_PASS = 'NDF2024!'; // Change this to your preferred password
+
+  function toggleAdmin() {
+    const p = document.getElementById('adminPanel');
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function adminLogin() {
+    const pw = document.getElementById('adminPassword').value;
+    if (pw === ADMIN_PASS) {
+      document.getElementById('adminLogin').style.display = 'none';
+      document.getElementById('adminContent').style.display = 'block';
+      renderPendingAdmin();
+    } else {
+      document.getElementById('adminLoginError').style.display = 'block';
+    }
+  }
+
+  function adminLogout() {
+    document.getElementById('adminLogin').style.display = 'block';
+    document.getElementById('adminContent').style.display = 'none';
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('adminLoginError').style.display = 'none';
+  }
+
+  function renderPendingAdmin() {
+    const list = document.getElementById('pendingList');
+    document.getElementById('pendingCount').textContent = `(${pendingTestimonials.length})`;
+    if (pendingTestimonials.length === 0) {
+      list.innerHTML = '<p style="color:var(--mid);font-size:0.9rem;font-weight:300;">No pending reviews.</p>';
+      return;
+    }
+    list.innerHTML = '';
+    pendingTestimonials.forEach((t, i) => {
+      const stars = '★'.repeat(t.rating);
+      const div = document.createElement('div');
+      div.style.cssText = 'background:var(--graphite);border:1px solid var(--steel);padding:1.5rem;margin-bottom:1rem;';
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.75rem;">
+          <div>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:1rem;color:var(--white);">${escapeHtml(t.name)}</span>
+            ${t.service ? `<span style="font-size:0.8rem;color:var(--mid);margin-left:8px;">· ${escapeHtml(t.service)}</span>` : ''}
+            <span style="color:var(--accent);margin-left:8px;font-size:0.9rem;">${stars}</span>
+          </div>
+          <span style="font-size:0.78rem;color:var(--steel);">${t.date}</span>
+        </div>
+        <p style="font-size:0.9rem;font-weight:300;color:var(--light);line-height:1.65;margin-bottom:1.2rem;">"${escapeHtml(t.review)}"</p>
+        <div style="display:flex;gap:0.75rem;">
+          <button onclick="approveTestimonial(${i})" class="btn-primary" style="padding:0.5rem 1.2rem;font-size:0.8rem;">✓ Approve & Publish</button>
+          <button onclick="rejectTestimonial(${i})" style="background:none;border:1px solid var(--steel);color:var(--mid);font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:1px;padding:0.5rem 1.2rem;cursor:pointer;">✕ Decline</button>
+        </div>`;
+      list.appendChild(div);
+    });
+  }
+
+  function approveTestimonial(i) {
+    approvedTestimonials.push(pendingTestimonials[i]);
+    pendingTestimonials.splice(i, 1);
+    sessionStorage.setItem('ndf_pending', JSON.stringify(pendingTestimonials));
+    sessionStorage.setItem('ndf_approved', JSON.stringify(approvedTestimonials));
+    renderPendingAdmin();
+    renderApprovedTestimonials();
+  }
+
+  function rejectTestimonial(i) {
+    pendingTestimonials.splice(i, 1);
+    sessionStorage.setItem('ndf_pending', JSON.stringify(pendingTestimonials));
+    renderPendingAdmin();
+  }
+
+  // Initial fade-in trigger
+  triggerFadeIns();
+  document.addEventListener('scroll', triggerFadeIns);
+</script>
+
+</body>
+</html>
